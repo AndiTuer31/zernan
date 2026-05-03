@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday, Papa ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+:root{
+  --gold:#c9a84c;--gold-l:#e8c97a;--gold-d:#8b5e1a;
+  --dark:#0a0804;--dark2:#110e06;--cream:#fdf6e3;
+  --paper:#f5ead0;--brown:#3d2408;
+}
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+body{background:var(--dark);font-family:'EB Garamond',serif;color:var(--cream);overflow-x:hidden}
+section{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 1.5rem;scroll-snap-align:start}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;opacity:.45;animation:bounce 2.2s ease infinite}
+.scroll-hint span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.scroll-arrow{width:1px;height:34px;background:linear-gradient(to bottom,var(--gold),transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* HERO */
+#hero{background:radial-gradient(ellipse at 50% 40%,#1e1406 0%,var(--dark) 70%);text-align:center}
+.hero-year{font-family:'EB Garamond',serif;font-size:clamp(5rem,38vw,14rem);font-weight:300;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.15);letter-spacing:-.02em;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;user-select:none;pointer-events:none}
+.hero-content{position:relative;z-index:2}
+.hero-tag{font-size:.72rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:1.4rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,7vw,4.5rem);font-weight:400;line-height:1.2;margin-bottom:.8rem}
+.hero-title em{font-style:italic;color:var(--gold-l);display:block}
+.hero-sub{font-size:1rem;color:rgba(253,246,227,.55);font-style:italic;margin-bottom:2.5rem;letter-spacing:.04em}
+.cta-btn{display:inline-block;padding:.9rem 2.4rem;border:1px solid var(--gold);color:var(--gold);font-family:'EB Garamond',serif;font-size:1rem;letter-spacing:.18em;cursor:pointer;background:transparent;position:relative;overflow:hidden;transition:color .4s}
+.cta-btn::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s ease;z-index:-1}
+.cta-btn:hover,.cta-btn:active{color:var(--dark)}
+.cta-btn:hover::before,.cta-btn:active::before{transform:scaleX(1)}
+
+/* REVEAL */
+#reveal{background:radial-gradient(ellipse at 50% 100%,#1a1004,var(--dark) 60%);text-align:center}
+.sec-label{font-size:.68rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);opacity:.6;margin-bottom:.8rem}
+.sec-divider{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.2rem auto}
+.reveal-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,5vw,2.8rem);font-weight:400;margin-bottom:.8rem;line-height:1.25}
+.age-display{font-family:'Playfair Display',serif;font-size:clamp(5.5rem,30vw,11rem);font-weight:700;color:transparent;background:linear-gradient(135deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold));-webkit-background-clip:text;background-clip:text;line-height:1;filter:drop-shadow(0 0 30px rgba(201,168,76,.28))}
+.age-label{font-size:.85rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-top:.8rem;margin-bottom:2.5rem}
+.age-facts{display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap}
+.age-fact{text-align:center;min-width:90px}
+.age-fact .num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold-l);display:block;line-height:1.1}
+.age-fact .lbl{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,227,.38);margin-top:.3rem;display:block;line-height:1.4}
+
+/* TIMELINE - mobile first, clean layout */
+#timeline{background:var(--dark2);padding:4rem 0;justify-content:flex-start;scroll-snap-align:start}
+.tl-inner{width:100%;max-width:700px;margin:0 auto;padding:0 1.5rem}
+.tl-section-head{text-align:center;margin-bottom:2.5rem}
+.tl-wrap{position:relative;margin-top:1rem}
+
+/* Mobile: vertical line, all items left-aligned */
+.tl-line{
+  position:absolute;
+  left:0;
+  top:0;bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,var(--gold) 6%,var(--gold) 94%,transparent);
+}
+.tl-item{
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:0 1.2rem;
+  margin-bottom:3rem;
+  position:relative;
+  align-items:start;
+}
+.tl-dot{
+  width:12px;height:12px;
+  background:var(--gold);border-radius:50%;
+  box-shadow:0 0 12px rgba(201,168,76,.8);
+  margin-top:.45rem;
+  justify-self:center;
+  flex-shrink:0;
+  position:relative;
+  z-index:2;
+}
+.tl-content{
+  opacity:0;
+  transition:opacity .65s ease,transform .65s ease;
+  transform:translateX(16px);
+  padding-bottom:.5rem;
+}
+.tl-content.visible{opacity:1;transform:none}
+.tl-year{
+  font-size:.72rem;
+  letter-spacing:.2em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:.5rem;
+  display:block;
+  font-style:normal;
+}
+.tl-emoji{font-size:1.4rem;margin-bottom:.4rem;display:block;line-height:1}
+.tl-text{
+  font-size:1.05rem;
+  color:rgba(253,246,227,.85);
+  line-height:1.75;
+  font-style:italic;
+  font-family:'EB Garamond',serif;
+}
+
+/* LETTER */
+#letter{background:radial-gradient(ellipse at 50% 0%,#1e1406,var(--dark));padding:3rem 1.2rem}
+.letter-outer{max-width:640px;width:100%;text-align:center}
+.letter-paper{background:var(--paper);color:var(--brown);padding:2.4rem 2rem;position:relative;text-align:left;box-shadow:0 30px 80px rgba(0,0,0,.75),0 0 0 1px rgba(201,168,76,.12),inset 0 0 50px rgba(139,94,26,.04)}
+.letter-paper::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l),var(--gold),var(--gold-d))}
+.letter-paper::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(transparent,transparent 31px,rgba(139,100,20,.05) 31px,rgba(139,100,20,.05) 32px)}
+.lp-corner{position:absolute;font-size:1.2rem;opacity:.22}
+.lp-corner.tl{top:.8rem;left:.8rem}.lp-corner.tr{top:.8rem;right:.8rem}.lp-corner.bl{bottom:.8rem;left:.8rem}.lp-corner.br{bottom:.8rem;right:.8rem}
+.lp-date{font-size:.82rem;font-style:italic;opacity:.55;margin-bottom:1.6rem;position:relative;z-index:1}
+.lp-greeting{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:1.2rem;position:relative;z-index:1}
+.lp-body{font-size:1.05rem;line-height:2;font-weight:300;position:relative;z-index:1}
+.lp-body p{margin-bottom:1rem}
+.lp-body strong{font-weight:500;color:#5c3010}
+.lp-sign{margin-top:1.8rem;font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:#5c3010;position:relative;z-index:1}
+.letter-deco{text-align:center;margin-top:1.2rem;color:var(--gold);opacity:.35;font-size:.75rem;letter-spacing:.28em}
+
+/* PHOTOS */
+#photos{background:var(--dark);padding:4rem 1.2rem;scroll-snap-align:start;justify-content:flex-start;padding-top:3.5rem}
+.photos-head{text-align:center;margin-bottom:2rem;width:100%}
+.photos-head h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,6vw,2.8rem);margin-bottom:.4rem}
+.photos-head p{color:rgba(253,246,227,.4);font-style:italic;font-size:.9rem}
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:560px;width:100%;margin:0 auto}
+.photo-slot:first-child{grid-column:1/3;aspect-ratio:16/9}
+.photo-slot{background:linear-gradient(135deg,#1a1208,#0e0a04);border:1px solid rgba(201,168,76,.2);border-radius:2px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.photo-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(0,0,0,.6),transparent);
+  color:rgba(253,246,227,.7);
+  font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  padding:.5rem .6rem .4rem;
+  text-align:center;font-style:normal;
+  font-family:'EB Garamond',serif;
+}
+.finale{text-align:center;margin-top:2.5rem;padding-bottom:1rem;width:100%}
+.finale p{color:rgba(201,168,76,.3);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+
+/* NAV */
+.nav-dots{position:fixed;right:1rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px;z-index:100}
+.ndot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(201,168,76,.4);cursor:pointer;transition:background .3s,transform .3s;-webkit-tap-highlight-color:transparent}
+.ndot.active{background:var(--gold);transform:scale(1.35)}
+
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}
+.fade-in.visible{opacity:1;transform:none}
+.conf{position:fixed;pointer-events:none;z-index:9998;border-radius:2px;animation:confFall linear forwards}
+@keyframes confFall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(105vh) rotate(720deg)}}
+
+/* DESKTOP: symmetric timeline */
+@media(min-width:640px){
+  section{padding:4rem 2.5rem}
+  #timeline{padding:5rem 0}
+  .tl-inner{padding:0 2rem}
+  .tl-line{left:50%;transform:translateX(-50%)}
+  .tl-wrap{padding:0}
+  .tl-item{
+    grid-template-columns:1fr 28px 1fr;
+    gap:0 1.5rem;
+    margin-bottom:3.5rem;
+  }
+  /* odd items: text left, dot center, empty right */
+  .tl-item:nth-child(odd) .tl-dot{order:2}
+  .tl-item:nth-child(odd) .tl-content{order:1;text-align:right;transform:translateX(-16px)}
+  .tl-item:nth-child(odd) .tl-spacer{order:3}
+  /* even items: empty left, dot center, text right */
+  .tl-item:nth-child(even) .tl-spacer{order:1}
+  .tl-item:nth-child(even) .tl-dot{order:2}
+  .tl-item:nth-child(even) .tl-content{order:3;text-align:left;transform:translateX(16px)}
+  .tl-content.visible{transform:none}
+  .tl-dot{margin-top:.5rem}
+  .photo-grid{grid-template-columns:repeat(3,1fr)}
+  .photo-slot:first-child{grid-column:1/3;aspect-ratio:16/9}
+  .letter-paper{padding:3.2rem 3.5rem}
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- §1 HERO -->
+<section id="hero">
+  <div class="hero-year">1970</div>
+  <div class="hero-content">
+    <p class="hero-tag fade-in">✦ A gift from the heart ✦</p>
+    <h1 class="hero-title fade-in">Today you're celebrating<br/><em>a special day.</em></h1>
+    <p class="hero-sub fade-in">And we wouldn't want to miss it for the world.</p>
+    <button class="cta-btn fade-in" onclick="document.getElementById('reveal').scrollIntoView({behavior:'smooth'})">Open your gift &rarr;</button>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- §2 REVEAL -->
+<section id="reveal">
+  <p class="sec-label fade-in">Chapter I</p>
+  <h2 class="reveal-title fade-in">Today marks a milestone<br/>worth celebrating.</h2>
+  <div class="sec-divider fade-in"></div>
+  <div class="age-display fade-in">56</div>
+  <p class="age-label fade-in">Years of life fully lived</p>
+  <div class="age-facts fade-in">
+    <div class="age-fact"><span class="num" id="daysCount">—</span><span class="lbl">Days of life</span></div>
+    <div class="age-fact"><span class="num">500+</span><span class="lbl">Plane rides ✈️</span></div>
+    <div class="age-fact"><span class="num">∞</span><span class="lbl">Selfies taken 📸</span></div>
+  </div>
+  <div class="scroll-hint" style="margin-top:2rem"><span>Next</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- §3 TIMELINE -->
+<section id="timeline">
+  <div class="tl-inner">
+    <div class="tl-section-head">
+      <p class="sec-label fade-in">Chapter II</p>
+      <h2 class="fade-in" style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5vw,2.8rem);font-weight:400">Your Story</h2>
+      <div class="sec-divider fade-in"></div>
+    </div>
+    <div class="tl-wrap">
+      <div class="tl-line"></div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-year">04 May 1970</span>
+          <span class="tl-emoji">🌟</span>
+          <p class="tl-text">The beginning of it all — a man ready to take on the world.</p>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-year">23 July 2005</span>
+          <span class="tl-emoji">💍</span>
+          <p class="tl-text">The day you said "I do" — and built a family from the ground up.</p>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-year">05 April 2006</span>
+          <span class="tl-emoji">👶</span>
+          <p class="tl-text">Eana entered the world — and you became a father for the very first time.</p>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-year">01 April 2008</span>
+          <span class="tl-emoji">👦</span>
+          <p class="tl-text">Lyan arrived — the family was complete, and life got even fuller.</p>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-year">2011</span>
+          <span class="tl-emoji">🧠</span>
+          <p class="tl-text">Officially completed Neurology training and further education — a milestone of dedication and expertise.</p>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-year">2025</span>
+          <span class="tl-emoji">🏍️</span>
+          <p class="tl-text">Started riding motorcycles — because some adventures begin at any age.</p>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-year">Today — 04 May 2026</span>
+          <span class="tl-emoji">🎂</span>
+          <p class="tl-text">A new chapter begins. 56 years of a life truly lived — and the best is yet to come.</p>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="scroll-hint" style="margin-top:1rem"><span>Next</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- §4 LETTER -->
+<section id="letter">
+  <div class="letter-outer">
+    <p class="sec-label fade-in">Chapter III</p>
+    <div class="sec-divider fade-in"></div>
+    <div class="letter-paper fade-in">
+      <span class="lp-corner tl">✦</span><span class="lp-corner tr">✦</span><span class="lp-corner bl">✦</span><span class="lp-corner br">✦</span>
+      <p class="lp-date">May 2026</p>
+      <h3 class="lp-greeting">Dear Papa,</h3>
+      <div class="lp-body">
+        <p>I wish you a very happy birthday. I'm sad we can't join you on this special day, but you are always in our hearts as we are in yours.</p>
+        <p>You have taught me so many things in life that I will always keep in my heart. <strong>You are a person I strongly look up to</strong>, and I'm forever grateful for you being my papa.</p>
+      </div>
+      <p class="lp-sign">Love, Eanali 🤍</p>
+    </div>
+    <p class="letter-deco">✦ &nbsp; ✦ &nbsp; ✦</p>
+  </div>
+  <div class="scroll-hint" style="margin-top:1.5rem"><span>Almost there</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- §5 PHOTOS -->
+<section id="photos">
+  <div class="photos-head fade-in">
+    <p class="sec-label">Chapter IV</p>
+    <h2>Our <em style="font-style:italic;color:var(--gold-l)">Memories</em></h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="photo-grid fade-in">
+    <div class="photo-slot">
+      <img src="bild1.jpeg" alt="Memory 1"/>
+      <span class="photo-caption">Our favourite</span>
+    </div>
+    <div class="photo-slot">
+      <img src="bild2.jpeg" alt="Memory 2"/>
+      <span class="photo-caption">Together</span>
+    </div>
+    <div class="photo-slot">
+      <img src="bild3.jpeg" alt="Memory 3"/>
+      <span class="photo-caption">Pride</span>
+    </div>
+    <div class="photo-slot">
+      <img src="bild4.jpeg" alt="Memory 4"/>
+      <span class="photo-caption">Family</span>
+    </div>
+    <div class="photo-slot">
+      <img src="bild5.jpeg" alt="Memory 5"/>
+      <span class="photo-caption">Memory</span>
+    </div>
+    <div class="photo-slot">
+      <img src="bild6.jpeg" alt="Memory 6"/>
+      <span class="photo-caption">Forever</span>
+    </div>
+  </div>
+  <div class="finale fade-in">
+    <div class="sec-divider" style="margin-bottom:1.2rem"></div>
+    <p>✦ &nbsp; Made with love — for you ✦</p>
+  </div>
+</section>
+
+<script>
+/* PARTICLES */
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+let W,H,parts=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+class P{
+  constructor(){this.reset()}
+  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*.7+.2;this.a=Math.random();this.vx=(Math.random()-.5)*.12;this.vy=-Math.random()*.08-.04;this.va=(Math.random()-.5)*.004}
+  update(){this.x+=this.vx;this.y+=this.vy;this.a+=this.va;if(this.y<-5||this.a<=0)this.reset();if(this.a>1)this.va*=-1}
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(201,168,76,${Math.max(0,this.a)})`;ctx.fill()}
+}
+for(let i=0;i<100;i++)parts.push(new P());
+function loop(){ctx.clearRect(0,0,W,H);parts.forEach(p=>{p.update();p.draw()});requestAnimationFrame(loop)}
+loop();
+
+/* STATS */
+const DOB=new Date('1970-05-04');
+const today=new Date('2026-05-04');
+const days=Math.floor((today-DOB)/86400000);
+function animCount(el,target){
+  let s=0,step=1800/60;
+  const t=setInterval(()=>{s+=target/step;if(s>=target){el.textContent=Math.round(target).toLocaleString('en');clearInterval(t)}else el.textContent=Math.round(s).toLocaleString('en')},1000/60);
+}
+
+/* NAV DOTS */
+const secs=['hero','reveal','timeline','letter','photos'];
+const navDots=document.getElementById('navDots');
+secs.forEach((id,i)=>{
+  const d=document.createElement('div');d.className='ndot'+(i===0?' active':'');
+  d.onclick=()=>document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  navDots.appendChild(d);
+});
+const secEls=secs.map(id=>document.getElementById(id));
+const dotEls=document.querySelectorAll('.ndot');
+let countersRun=false;
+const secObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const i=secEls.indexOf(e.target);
+      dotEls.forEach((d,j)=>d.classList.toggle('active',i===j));
+      if(i===1&&!countersRun){countersRun=true;setTimeout(()=>animCount(document.getElementById('daysCount'),days),300)}
+    }
+  });
+},{threshold:.4});
+secEls.forEach(el=>secObs.observe(el));
+
+/* FADE IN */
+const fadeObs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.12});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
+
+/* TIMELINE ITEMS */
+const tlObs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.querySelector('.tl-content')?.classList.add('visible')}),{threshold:.2});
+document.querySelectorAll('.tl-item').forEach(el=>tlObs.observe(el));
+
+/* CONFETTI on photos */
+let confDone=false;
+new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting&&!confDone){confDone=true;burst()}})},{threshold:.35}).observe(document.getElementById('photos'));
+function burst(){
+  const cols=['#c9a84c','#e8c97a','#f5ead0','#d4b87a','#8b5e1a','#fff8e7'];
+  for(let i=0;i<90;i++)setTimeout(()=>{
+    const p=document.createElement('div');p.className='conf';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-10px;width:${4+Math.random()*7}px;height:${4+Math.random()*7}px;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${1.8+Math.random()*2.5}s;animation-delay:${Math.random()*.5}s;border-radius:${Math.random()>.5?'50%':'2px'}`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),4500);
+  },i*18);
+}
+</script>
+</body>
+</html>
